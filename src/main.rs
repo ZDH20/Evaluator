@@ -43,10 +43,17 @@ fn print_begin_info(verbose: bool) {
 
 fn main() {
     let mut graph_input: evaluator_mod::GraphInput;
-    let mut buffer      = String::new();
-    let mut history     = Vec::<f64>::new();
-    let args:    String = std::env::args().collect();
-    let verbose: bool   = if args.trim() == "./graphing-v" { true } else { false };
+    let mut buffer        = String::new();
+    let mut history       = Vec::<f64>::new();
+    let args: Vec<String> = std::env::args().collect();
+    let mut verbose: bool = false;
+
+    if args.len() == 2 {
+        verbose = if &args[1] == "-v" { true } else { false };
+    } else if args.len() > 2 {
+        println!("Usage: {} <filename.txt>", args[0]);
+        std::process::exit(1);
+    }
 
     print_begin_info(verbose);
 
